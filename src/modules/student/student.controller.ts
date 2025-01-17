@@ -8,10 +8,13 @@ import {
   Delete,
   Req,
   Request,
+  NotFoundException,
+  Res,
 } from '@nestjs/common';
 import { StudentService } from './student.service';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
+import { Response } from 'express';
 
 @Controller('student')
 export class StudentController {
@@ -39,7 +42,9 @@ export class StudentController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.studentService.remove(+id);
+  async remove(@Param('id') id: string, @Res() res: Response) {
+    console.log('1', id, res);
+    const temp = await this.studentService.remove(id);
+    return res.status(200).json({ message: 'success' });
   }
 }

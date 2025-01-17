@@ -49,7 +49,7 @@ export class StudentService {
     return `This action updates a #${id} student`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} student`;
+  async remove(id: string) {
+    const temp = await this.studentRepository.delete(id);
   }
 }
