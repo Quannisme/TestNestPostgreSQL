@@ -17,6 +17,8 @@ export class Student {
   age: number;
   @Column({ name: 'studentEmail', type: 'varchar' })
   email: string;
+  @Column({ name: 'image', type: 'varchar' })
+  image: string;
   @ManyToMany(() => Course, (course) => course.students)
   @JoinTable({
     name: 'student_course',

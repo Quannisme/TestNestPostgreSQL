@@ -10,20 +10,29 @@ import {
   Request,
   NotFoundException,
   Res,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 import { StudentService } from './student.service';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
 import { Response } from 'express';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('student')
 export class StudentController {
   constructor(private readonly studentService: StudentService) {}
 
   @Post()
-  create(@Body() createStudentDto: CreateStudentDto, @Request() req: Request) {
-    console.log('Request:', req.body);
-    return this.studentService.create(createStudentDto);
+  @UseInterceptors(FileInterceptor('file'))
+  async create(
+    @Body() createStudentDto: CreateStudentDto,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    console.log('Received file:', file);
+    console.log('Received data:', createStudentDto);
+    // return this.studentService.create(createStudentDto);
+    return;
   }
 
   @Get()

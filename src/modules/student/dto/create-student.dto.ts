@@ -10,23 +10,25 @@ import {
 } from 'class-validator';
 
 export class CreateStudentDto {
-  @IsNotEmpty({ message: 'Required' })
   @IsString({ message: 'Required string' })
   @Matches(/^[A-Z][a-z]*(?: [A-Z][a-z]*)*$/, {
     message: 'Required first letter upper case',
   })
-  name: string;
   @IsNotEmpty({ message: 'Required' })
-  @IsNumber({}, { message: 'Required number' })
+  name: string;
   @Max(50, { message: 'Max 50' })
   @Min(18, { message: 'Min 18' })
+  @IsNumber({}, { message: 'Required number' })
+  @IsNotEmpty({ message: 'Required age' })
   age: number;
-  @IsNotEmpty({ message: 'Required' })
   @IsString({ message: 'Required string' })
   @Matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, {
     message: 'Invalid email',
   })
-  email: string;
   @IsNotEmpty({ message: 'Required' })
+  email: string;
+  @IsNotEmpty({ message: 'Required image' })
+  image: string;
+  @IsNotEmpty({ message: 'Required Courses' })
   courses: { id: string }[];
 }
