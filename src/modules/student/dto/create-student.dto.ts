@@ -28,5 +28,5 @@ export class CreateStudentDto {
   })
   email: string;
   @IsNotEmpty({ message: 'Required' })
-  courses: number;
+  courses: { id: string }[];
 }

@@ -15,8 +15,8 @@ export class CourseService {
     return temp;
   }
 
-  findAll() {
-    return `This action returns all course`;
+  async findAll() {
+    return await this.courseRepository.find();
   }
 
   findOne(id: number) {

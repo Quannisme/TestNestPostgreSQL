@@ -4,7 +4,7 @@ import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 @Entity()
 export class Course {
   @PrimaryGeneratedColumn('uuid', { name: 'id' })
-  id: number;
+  id: string;
   @Column({ name: 'nameClass', type: 'varchar' })
   name: string;
   @ManyToMany(() => Student, (student) => student.courses)

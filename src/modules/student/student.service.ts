@@ -4,20 +4,29 @@ import { UpdateStudentDto } from './dto/update-student.dto';
 import { Student } from './entities/student.entity';
 import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
+import { Course } from '../course/entities/course.entity';
 
 @Injectable()
 export class StudentService {
   constructor(
     @InjectRepository(Student)
     private studentRepository: Repository<Student>,
+    @InjectRepository(Course)
+    private courseRepository: Repository<Course>,
   ) {}
+
   async create(createStudentDto: CreateStudentDto): Promise<Student> {
+    const courses = await this.courseRepository.findByIds(
+      createStudentDto.courses.map((course) => course.id),
+    );
+
     const student = this.studentRepository.create({
       name: createStudentDto.name,
       age: createStudentDto.age,
       email: createStudentDto.email,
-      courses: [{ id: createStudentDto.courses }],
+      courses,
     });
+    console.log('s', student);
     const temp = await this.studentRepository.save(student);
     console.log(temp);
     return temp;
@@ -32,7 +41,7 @@ export class StudentService {
     return await this.studentRepository.find({
       select: {
         courses: {
-          id: true,
+          name: true,
         },
       },
       relations: {
